@@ -103,7 +103,7 @@ y$interval[maxStepsIndex]</code></pre>
 <p>The number of missing values are:</p>
 <pre class="r"><code>sum(is.na(activity))</code></pre>
 <pre><code>## [1] 2304</code></pre>
-<p>Fill in the missing steps data with mean value of that interval.</p>
+<p>Fill in the missing steps data with mean value of that interval. For all missing value, fillin mean value of that interval of all days (which is alrady got in previous step).</p>
 <pre class="r"><code>## get data contain NA
 activity_fill &lt;- activity_ori
 size &lt;- dim(activity)[1]
@@ -130,9 +130,7 @@ hist(total_steps_date$total_steps)</code></pre>
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
 <p>Add weekday or weekend factor into data, and geoup by interval and weekday type.</p>
 <pre class="r"><code>activity_week &lt;- mutate(activity, ww = weekdays(date), ww = (ww == &quot;Sunday&quot; | ww ==&quot;Saturday&quot;), ww = ifelse(ww, &quot;weekend&quot;, &quot;weekday&quot;), ww = as.factor(ww))
-
 activity_week_int &lt;- group_by(activity_week, interval, ww)
-
 weekdata_summ &lt;- summarise(activity_week_int, steps_sum = mean(steps, na.rm = TRUE))</code></pre>
 <p>Then plot the data by weekday or weekend:</p>
 <pre class="r"><code>par(mfrow = c(2,1), mar = c(4,4,2,1))

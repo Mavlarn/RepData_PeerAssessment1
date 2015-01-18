@@ -98,7 +98,7 @@ sum(is.na(activity))
 ## [1] 2304
 ```
 
-Fill in the missing steps data with mean value of that interval.
+Fill in the missing steps data with mean value of that interval. For all missing value, fillin mean value of that interval of all days (which is alrady got in previous step).
 
 ```r
 ## get data contain NA
@@ -154,9 +154,7 @@ Add weekday or weekend factor into data, and geoup by interval and weekday type.
 
 ```r
 activity_week <- mutate(activity, ww = weekdays(date), ww = (ww == "Sunday" | ww =="Saturday"), ww = ifelse(ww, "weekend", "weekday"), ww = as.factor(ww))
-
 activity_week_int <- group_by(activity_week, interval, ww)
-
 weekdata_summ <- summarise(activity_week_int, steps_sum = mean(steps, na.rm = TRUE))
 ```
 
