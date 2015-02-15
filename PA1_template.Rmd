@@ -22,17 +22,19 @@ activity <- mutate(activity, date = ymd(date))
 
 Histagram of the steps:
 ```{r echo = TRUE}
-hist(activity$steps)
+activity_per_day <- group_by(activity, date)
+activity_per_day <- summarise(activity_per_day, TotalStep=sum(steps, NA.rm=TRUE))
+hist(activity_per_day$TotalStep, main="Histogram of the total number of steps taken each day", xlab="Total steps")
 ```
 
 Mean of the steps is:
 ```{r echo = TRUE}
-mean(activity$steps, na.rm = TRUE)
+mean(activity_per_day$TotalStep, na.rm = TRUE)
 ```
 
 Median of the steps is:
 ```{r echo = TRUE}
-median(activity$steps, na.rm = TRUE)
+median(activity_per_day$TotalStep, na.rm = TRUE)
 ```
 
 
@@ -79,7 +81,7 @@ Then plot the histogram of the total number of steps taken each day. We will gro
 ```{r echo = TRUE}
 activity_fill_date <- group_by(activity_fill, date)
 total_steps_date <- summarise(activity_fill_date, total_steps = sum(steps))
-hist(total_steps_date$total_steps)
+hist(total_steps_date$total_steps, main="Histogram of the total number of steps taken each day", xlab="Total steps")
 ```
 
 The mean of the total number of steps taken each day:
