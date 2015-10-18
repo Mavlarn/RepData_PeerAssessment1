@@ -69,7 +69,9 @@ activity_fill <- activity_ori
 size <- dim(activity)[1]
 for (i in 1: size) {
   if (is.na(activity_fill[i, 1])) {
+    # get the interval of this NA value.
     currNAInterval <- activity_fill[i, 3]
+    # get the mean value of this interval from 'y', which is mean of all days in that interval.
     currMeanVal <- y$value[ y$interval == currNAInterval]
     activity_fill[i, 1] <- currMeanVal
   }
